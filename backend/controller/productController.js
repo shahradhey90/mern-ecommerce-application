@@ -2,12 +2,15 @@
 const product = require('../model/productModel')
 const {CustomError} = require('../utils/errorHandler')
 const asyncErrorHandler = require('../utils/asyncErrorHandler')
+const Features = require('../utils/features')
 
 //get all Product
 
 const getAllProducts = asyncErrorHandler(async (req,res,next)=>{
-    const allProducts = await product.find();
-    res.json({success:true,allProducts});
+    const allProducts = product.find();
+    const findProduct = new Features(allProducts,req.query);
+    const allProducts1 = await findProduct.find();
+    res.json({success:true,allProducts1});
 })
 
 
