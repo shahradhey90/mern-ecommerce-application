@@ -8,9 +8,10 @@ const Features = require('../utils/features')
 
 const getAllProducts = asyncErrorHandler(async (req,res,next)=>{
     const allProducts = product.find();
-    const findProduct = new Features(allProducts,req.query);
-    const allProducts1 = await findProduct.find();
-    res.json({success:true,allProducts1});
+    const productCount = await product.countDocuments();
+    const findProduct = new Features(allProducts,req.query).search().filter().pagination(5);
+    const allProducts1 = await findProduct.query;
+    res.json({success:true,allProducts1,productCount});
 })
 
 
