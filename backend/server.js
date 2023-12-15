@@ -1,8 +1,10 @@
 const express = require("express");
 const product = require("./routes/productRoute");
+const user = require("./routes/userRoutes");
 const dotenv = require("dotenv");
 const databaseConnect = require("./database/connect");
 const errorHandler = require("./middleware/errorMiddleware")
+const cookieParser = require('cookie-parser');
 dotenv.config({path:"backend/config/config.env"});
 
 
@@ -19,6 +21,8 @@ process.on('uncaughtExceptionMonitor', (err) => {
     )
 
 app.use(express.json());
+app.use(cookieParser());
+app.use('/api/v1/user',user);
 app.use('/api/v1',product);
 
 app.get("/",(req,res)=>{
