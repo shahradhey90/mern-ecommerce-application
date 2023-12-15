@@ -170,7 +170,9 @@ const deleteProductReviews = asyncErrorHandler(async (req,res,next)=>{
      console.log(result);
         
 
-    
+    if (result.modifiedCount === 0) {
+        next("Only User who created the review or Admin can delete the review.",403);
+    }
 
     //products.reviews = newReview;
     
